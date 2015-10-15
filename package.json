@@ -1,0 +1,13 @@
+{
+  "name": "mpabox-static-paths",
+  "version": "1.0.0",
+  "description": "Static Mapbox url generator for paths.",
+  "main": "index.js",
+  "author": "Sebastian Osuna <jsebastianosuna@hotmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "isarray": "0.0.1",
+    "polyline": "^0.2.0",
+    "request": "^2.65.0"
+  }
+}
