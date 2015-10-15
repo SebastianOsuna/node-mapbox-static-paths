@@ -54,6 +54,7 @@ module.exports = function (accessToken) {
     options.maptype = options.maptype || 'mapbox.streets';
     options.format = options.format || '.png';
     points = points || [];
+    options.center = options.center || calculateCenter(points);
 
     // Build the url
     var params = [];
@@ -74,6 +75,25 @@ module.exports = function (accessToken) {
 
     return url;
   };
+
+  function calculateCenter (points) {
+    var mxlat, mxlot, mnlat = 200, mnlot = 200;
+    points.forEach(function (p) {
+      if (p[0] > mxlat) {
+        mxlat = p[0];
+      }
+      if (p[1] > mxlot) {
+        mxlot = p[1];
+      }
+      if (p[1] < mnlot) {
+        mnlot = p[1];
+      }
+      if (p[0] < mnlat) {
+        mnlat = p[0];
+      }
+    });
+    return [(mnlat+mxlat)/2, (mnlot+mxlot)/2];
+  }
 
   /*
   {options.color} Color of the line in hex

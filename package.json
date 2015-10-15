@@ -1,5 +1,5 @@
 {
-  "name": "mpabox-static-paths",
+  "name": "mapbox-static-paths",
   "version": "1.0.0",
   "description": "Static Mapbox url generator for paths.",
   "main": "index.js",
