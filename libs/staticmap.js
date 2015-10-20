@@ -8,15 +8,15 @@ module.exports = function (accessToken) {
 
   this.BASE_URL = "https://api.mapbox.com/v4/";
 
+  this.paths = [];
+
   /*
-  getMap(points, [options [, filename [, callback]]]).
-  See #getUrl default options.
   {filename} File name to write the downloaded image. If no file name is provided,
     the request stream is returned.
   {callback} Callback to be called after image is downloaded. callback = fn(error)
   */
-  this.getMap = function (points, options, filename, callback) {
-    var r = request(this.getUrl(points, options));
+  this.getMap = function (options, filename, callback) {
+    var r = request(this.getUrl(options));
     if (filename) {
       r.pipe(fs.createWriteStream(filename));
 
@@ -38,7 +38,7 @@ module.exports = function (accessToken) {
   {points} List of points of the path to paint.
     points = [ [<lat>, <lot>], ... ]
   */
-  this.getUrl = function (points, options) {
+  this.getUrl = function (options) {
     options = options || {};
     // Clean inputs
     options.center = options.center || 'auto';
@@ -53,13 +53,13 @@ module.exports = function (accessToken) {
     options.size = options.size || '500x500';
     options.maptype = options.maptype || 'mapbox.streets';
     options.format = options.format || '.png';
-    points = points || [];
-    options.center = options.center || calculateCenter(points);
+
+    //options.center = options.center || calculateCenter(points);
 
     // Build the url
     var params = [];
     params.push(options.maptype);
-    params.push(makePath(points));
+    params.push(this.paths.join(','));
     params.push(options.center);
     params.push(options.size);
 
@@ -99,17 +99,41 @@ module.exports = function (accessToken) {
   {options.color} Color of the line in hex
   {options.opacity} Opacity of the drawn line
   */
-  function makePath (points, options) {
+  this.setPath = function(points, options) {
     // Set defaults
     options = options || {};
-    options.color = options.color || '44f';
-    options.opacity = options.opacity || '1';
+    options.path = options.path || '4';
+    options.strokecolor = options.strokecolor || '44f';
+    options.strokeopacity = options.strokeopacity || '1';
+    options.fillcolor = options.fillcolor || '0f0';
+    options.fillopacity = options.fillopacity || '0';
 
     var path = polyline.encode(points);
 
-    return "path+" + options.color + "-" + options.opacity +
-           "(" + encodeURIComponent(path) + ")";
-  }
+    this.paths.push("path-" + options.path + "+" + options.strokecolor + "-" + options.strokeopacity +
+            "+" + options.fillcolor + "-" + options.fillopacity +
+            "(" + encodeURIComponent(path) + ")");
+    return this;
+};
+  /*
+  {options.name} name of mark pin-s, pin-m, pin-l
+  {options.label} Marker symbol. An alphanumberic label or valid Maki icon.
+a-z, 0-9,  aerialway, airfield, airport, alcohol-shop, america-football, art-gallery, bakery, bank, bar, baseball, basketball, beer, bicycle, building, bus, cafe, camera, campsite, car, cemetery, chemist, cinema, circle-stroked, circle, city, clothing-store, college, commercial, cricket, cross, dam, danger, dentist, disability, dog-park, embassy, emergency-telephone, entrance, farm, fast-food, ferry, fire-station, fuel, garden, gift, golf, grocery, hairdresser, harbor, heart, heliport, hospital, ice-cream, industrial, land-use, laundry, library, lighthouse, lodging, logging, london-underground, marker-stroked, marker, minefield, mobilephone, monument, museum, music, oil-well, park2, park, parking-garage, parking, pharmacy, pitch, place-of-worship, playground, police, polling-place, post, prison, rail-above, rail-light, rail-metro, rail-underground, rail, religious-christian, religious-jewish, religious-muslim, restaurant, roadblock, rocket, school, scooter, shop, skiing, slaughterhouse, soccer, square-stroked, square, star-stroked, star, suitcase, swimming, telephone, tennis, theatre, toilets, town-hall, town, triangle-stroked, triangle, village, warehouse, waste-basket, water, wetland, zoo
+  {options.color} An 3 or 6 digit RGB hex color.
+  */
+  this.setMark = function(point, options) {
+    // Set defaults
+    options = options || {};
+    options.name = options.name || 'pin-s';
+    options.label = options.label || 'star';
+    options.color = options.color || 'ff6633';
+
+    var path = point;
+
+    this.paths.push(options.name + "-" + options.label + "+" + options.color +
+           "(" + encodeURIComponent(path) + ")");
+    return this;
+};
 
   return this;
 };
