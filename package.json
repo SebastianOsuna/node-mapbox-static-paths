@@ -1,13 +1,32 @@
 {
-  "name": "mapbox-static-paths",
-  "version": "1.0.0",
-  "description": "Static Mapbox url generator for paths.",
-  "main": "index.js",
-  "author": "Sebastian Osuna <jsebastianosuna@hotmail.com>",
-  "license": "MIT",
-  "dependencies": {
-    "isarray": "0.0.1",
-    "polyline": "^0.2.0",
-    "request": "^2.65.0"
-  }
+    "name": "mapbox-static-paths",
+    "version": "1.1.0",
+    "description": "Static Mapbox url generator for paths.",
+    "main": "index.js",
+    "author": "Sebastian Osuna <jsebastianosuna@hotmail.com>",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/SebastianOsuna/node-mapbox-static-paths"
+    },
+    "keywords": [
+        "mapbox",
+        "map",
+        "static",
+        "file",
+        "mark",
+        "path"
+    ],
+    "engines": {
+        "node": ">=0.10.0"
+    },
+    "contributors": [{
+        "name": "Juan Carlos Martínez Rey",
+        "email": "juan.mar@gmail.com"
+    }],
+    "dependencies": {
+        "isarray": "0.0.1",
+        "polyline": "^0.2.0",
+        "request": "^2.65.0"
+    }
 }
