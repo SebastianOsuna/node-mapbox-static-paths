@@ -54,8 +54,6 @@ module.exports = function (accessToken) {
     options.maptype = options.maptype || 'mapbox.streets';
     options.format = options.format || '.png';
 
-    //options.center = options.center || calculateCenter(points);
-
     // Build the url
     var params = [];
     params.push(options.maptype);
@@ -68,6 +66,9 @@ module.exports = function (accessToken) {
     if (accessToken) {
       url += "?access_token=" + accessToken;
     }
+
+    // Clear paths
+    this.paths = [];
 
     if (url.length > 4096) {
       throw 'Url too long. Think about cutting off some points';
