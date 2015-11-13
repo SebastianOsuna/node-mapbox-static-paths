@@ -1,4 +1,4 @@
-var tripMapper = require('../index.js')('pk.eyJ1Ijoic2VkaW5zb24iLCJhIjoiMTExM2NhYzI4YmNhYmEyNDUxMmE4NTRmNjA5NmQ1ODgifQ.ORcT_SU6Z823YMfiwfxf8g');
+var tripMapper = require('../index.js')('');
 
 var polyline = require('polyline');
 

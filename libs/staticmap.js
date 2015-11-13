@@ -3,10 +3,10 @@ var polyline = require('polyline'),
     fs = require('fs'),
     isArray = require('isarray');
 
-
 module.exports = function (accessToken) {
 
   this.BASE_URL = "https://api.mapbox.com/v4/";
+  this.MAX_PATH_POINTS = 700;
 
   this.paths = [];
 
@@ -108,6 +108,18 @@ module.exports = function (accessToken) {
     options.strokeopacity = options.strokeopacity || '1';
     options.fillcolor = options.fillcolor || '0f0';
     options.fillopacity = options.fillopacity || '0';
+
+    if (points.length > this.MAX_PATH_POINTS) {
+      var dropFactor = points.length / this.MAX_PATH_POINTS,
+          selectedPoints = [];
+      for (var i = 0, j = 0; i < points.length && (j = Math.round(i*dropFactor)) < points.length; i++){
+        selectedPoints.push(j);
+      }
+      points = points
+        .filter(function (p, i) {
+          return !!p && selectedPoints.indexOf(i) > -1;
+        });
+    }
 
     var path = polyline.encode(points);
 
