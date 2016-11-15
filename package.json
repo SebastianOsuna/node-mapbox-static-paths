@@ -1,6 +1,6 @@
 {
     "name": "mapbox-static-paths",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "description": "Static Mapbox url generator for paths.",
     "main": "index.js",
     "author": "Sebastian Osuna <jsebastianosuna@hotmail.com>",
