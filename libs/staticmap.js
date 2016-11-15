@@ -139,11 +139,11 @@ a-z, 0-9,  aerialway, airfield, airport, alcohol-shop, america-football, art-gal
     options = options || {};
     options.name = options.name || 'pin-s';
     options.label = options.label || 'star';
-    options.color = options.color || 'ff6633';
+    options.color = options.name === 'url' ? null : (options.color || 'ff6633');
 
     var path = point;
 
-    this.paths.push(options.name + "-" + options.label + "+" + options.color +
+    this.paths.push(options.name + "-" + options.label + (options.color ? "+" + options.color : "") +
            "(" + encodeURIComponent(path) + ")");
     return this;
 };
