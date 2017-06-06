@@ -7,6 +7,7 @@ module.exports = function (accessToken) {
 
   this.BASE_URL = "https://api.mapbox.com/v4/";
   this.MAX_PATH_POINTS = 700;
+  this.MAX_URL_LENGTH = 4096;
 
   this.paths = [];
 
@@ -70,7 +71,7 @@ module.exports = function (accessToken) {
     // Clear paths
     this.paths = [];
 
-    if (url.length > 4096) {
+    if (url.length > this.MAX_URL_LENGTH) {
       throw 'Url too long. Think about cutting off some points';
     }
 
