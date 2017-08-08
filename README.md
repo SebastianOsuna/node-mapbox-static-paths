@@ -12,6 +12,9 @@ Require
 
 ```javascript
 var mapboxPaths = require('mapbox-static-paths')(PUBLIC_TOKEN);
+
+// Configure max URL length (default: 4096 characters)
+var mapboxPaths = require('mapbox-static-paths')(PUBLIC_TOKEN, { maxUrlLength: 4096 });
 ```
 
 Generate urls

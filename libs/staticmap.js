@@ -3,11 +3,12 @@ var polyline = require('polyline'),
     fs = require('fs'),
     isArray = require('isarray');
 
-module.exports = function (accessToken) {
+module.exports = function (accessToken, _options) {
+  var options = _options || {};
 
   this.BASE_URL = "https://api.mapbox.com/v4/";
   this.MAX_PATH_POINTS = 700;
-  this.MAX_URL_LENGTH = 4096;
+  this.MAX_URL_LENGTH = options.maxUrlLength || 4096;
 
   this.paths = [];
 
